@@ -14,18 +14,13 @@ app.use(express.static(publicDirectoryPath));
 
 const port = 3000;
 
-let count = 0;
-
 io.on('connection', (socket) => {
   console.log('a user connected');
-
-  socket.emit('countUpdated', count);
-
-  socket.on('increment', () => {
-    count++;
-    io.emit('countUpdated', count);
+  socket.emit("message", "welcome");
+  socket.on('sendMessage', (message) => {
+    io.emit('message', message);
+    console.log(message);
   });
-
 });
 
 server.listen(port, () => {console.log("listening on port", port)});
