@@ -14,3 +14,12 @@ document.querySelector('#message-form').addEventListener('submit', (e) => {
     socket.emit('sendMessage', message);
 
 });
+
+document.querySelector('#send-location').addEventListener('click', () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+        socket.emit('sendLocation', {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+        });        
+    });
+});

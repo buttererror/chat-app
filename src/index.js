@@ -20,12 +20,14 @@ io.on('connection', (socket) => {
   socket.broadcast.emit('user connected');
   socket.on('sendMessage', (message) => {
     io.emit('message', message);
-    console.log(message);
   });
   socket.on('disconnect', () => {
     io.emit('message', 'user disconnected');
   });
-    
+  
+  socket.on('sendLocation', (currentLocation) => {
+    io.emit('message', `https://google.com/maps?q=${currentLocation.latitude},${currentLocation.longitude}`);
+  });
 });
 
 server.listen(port, () => {console.log("listening on port", port)});
